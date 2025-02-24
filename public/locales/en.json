@@ -1,0 +1,54 @@
+{
+  "validation": {
+    "invalidEmail": "This email is not valid",
+    "required": "This field is required",
+    "minLength": "Password should have minimum 6 symbols",
+    "passwordShouldMatch": "The password you entered do not match!"
+  },
+  "errors": {
+    "network": {
+      "message": "Something went wrong...",
+      "description": "Unable to process your request at this time. Please try again later."
+    }
+  },
+  "signIn": {
+    "signInTitle": "Sign in to your account",
+    "signInButton": "Sign in",
+    "signInEmail": "Email address",
+    "signInPassword": "Password",
+    "signInMessage": "Not a member?",
+    "signUpLink": "Sign Up"
+  },
+  "signUp": {
+    "signUpTitle": "Create a new account",
+    "signUpButton": "Sign Up",
+    "signUpName": "Name",
+    "signUpEmail": "Email address",
+    "signUpPassword": "Password",
+    "signUpConfirmPassword": "Confirm password",
+    "signUpMessage": "Already have an account?",
+    "signInLink": "Sign In"
+  },
+  "header": {
+    "profile": "Profile",
+    "signOut": "Sign out",
+    "logo": "Another Twitter Clone"
+  },
+  "home": {
+    "mainTitle": "Welcome to my Demo React application",
+    "mainDesc": "This application is developed for demo purposes",
+    "buttonGetStarted": "Get started",
+    "buttonLogin": "Sign in"
+  },
+  "main": {
+    "tweetButton": "Tweet",
+    "whatOthersAreSaying": "What others are saying?",
+    "noFeed": "There is no feed"
+  },
+  "textEditor": {
+    "placeholder": "What's on your mind?"
+  },
+  "posts": {
+    "loadMore": "Load more"
+  }
+}

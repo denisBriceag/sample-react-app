@@ -1,0 +1,54 @@
+{
+  "validation": {
+    "invalidEmail": "Неверный электронный адресс",
+    "required": "Это поле обязательное",
+    "minLength": "Пароль должен иметь минимум 6 символов",
+    "passwordShouldMatch": "Введенный вами пароль не совпадает!"
+  },
+  "errors": {
+    "network": {
+      "message": "Что-то полшо не так...",
+      "description": "Невозможно обработать ваш запрос в данный момент. Пожалуйста, попробуйте еще раз позже."
+    }
+  },
+  "signIn": {
+    "signInTitle": "Войдите в свой аккаунт",
+    "signInButton": "Войти",
+    "signInEmail": "Почтовый адресс",
+    "signInPassword": "Пароль",
+    "signInMessage": "Нет аккаунта?",
+    "signUpLink": "Зарегестрируйтесь"
+  },
+  "signUp": {
+    "signUpTitle": "Создайте свой аккаунт",
+    "signUpButton": "Регистрация",
+    "signUpName": "Имя",
+    "signUpEmail": "Почтовый адресс",
+    "signUpPassword": "Пароль",
+    "signUpConfirmPassword": "Подтвердите пароль",
+    "signUpMessage": "Уже есть аккаунт?",
+    "signInLink": "Войдите в свой аккаунт"
+  },
+  "header": {
+    "profile": "Профиль",
+    "signOut": "Выйти",
+    "logo": "Еще один твиттер-клон"
+  },
+  "home": {
+    "mainTitle": "Добро пожаловать в мое демо React приложение!",
+    "mainDesc": "то приложение было разработано в демострационных целях",
+    "buttonGetStarted": "Продолжить",
+    "buttonLogin": "Войти в акаунт"
+  },
+  "main": {
+    "tweetButton": "Твитнуть",
+    "whatOthersAreSaying": "Что говорят другие?",
+    "noFeed": "Лента пуста"
+  },
+  "textEditor": {
+    "placeholder": "О чем  вы думаете?"
+  },
+  "posts": {
+    "loadMore": "Загрузить ещё"
+  }
+}

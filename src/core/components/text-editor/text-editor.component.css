@@ -1,0 +1,14 @@
+@import 'react-quill-new/dist/quill.snow.css';
+
+.ql-toolbar.ql-snow {
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+    height: 6.25rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+html.dark .ql-editor.ql-blank::before {
+    color: rgba(255, 255, 255, 0.45);
+}
