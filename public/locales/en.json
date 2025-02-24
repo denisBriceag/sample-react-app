@@ -49,6 +49,10 @@
     "placeholder": "What's on your mind?"
   },
   "posts": {
-    "loadMore": "Load more"
+    "reFetch": "Re-fetch posts",
+    "loadMore": "Load more",
+    "deleteModal": {
+      "message": "Are you sure you want to delete this tweet?"
+    }
   }
 }

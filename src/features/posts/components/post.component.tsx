@@ -21,17 +21,21 @@ import clsx from "clsx";
 import { useTheme } from "../../../core/providers/theme/theme.context.ts";
 
 type PostProps = {
-  id: number;
+  id: string;
   message: string;
   userId: number;
   postedOn: Date;
   userName: string;
   likeCount: number;
   likedByUser: boolean;
+  deleteHandler: (id: string) => void;
 };
 
 const PostEditModalComponent = lazy(
   () => import("./post-edit-modal.component.tsx"),
+);
+const ConfirmDeleteModal = lazy(
+  () => import("./confirm-delete-modal.component.tsx"),
 );
 
 const Post = memo(
@@ -43,6 +47,7 @@ const Post = memo(
     userName,
     likedByUser,
     likeCount,
+    deleteHandler,
   }: PostProps) => {
     const [likeState, setLikeState] = useState<{
       likes: number;
@@ -53,6 +58,7 @@ const Post = memo(
     });
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
     const [editorValue, setEditorValue] = useState(message);
 
     const { darkMode } = useTheme();
@@ -64,6 +70,7 @@ const Post = memo(
       const actions: ReactNode[] = [
         <span onClick={handleLikes} key="like-action">
           <LikeFilled
+            disabled={loading}
             key="like"
             className="ease-in hover:scale-110"
             style={{
@@ -82,6 +89,7 @@ const Post = memo(
             key="delete"
             style={{ fontSize: "1.25rem" }}
             className="ease-in hover:scale-110"
+            onClick={() => setDeleteModalOpen(true)}
           />,
           <EditOutlined
             key="edit"
@@ -118,8 +126,31 @@ const Post = memo(
         .patch(`/messages/${id}`, {
           message: editorValue,
         })
-        .then(() => (setIsModalOpen(false), setEditorValue(editorValue)))
+        .then(
+          () => (
+            setIsModalOpen(false),
+            setLoading(false),
+            setEditorValue(editorValue)
+          ),
+        )
         .catch(() => setLoading(false));
+    }
+
+    function handleDeleteMessage(): void {
+      setLoading(true);
+
+      axiosInstance
+        .delete(`/messages/${id}`)
+        .then(
+          () => (
+            deleteHandler(id), setDeleteModalOpen(false), setLoading(false)
+          ),
+        )
+        .catch(() => (setDeleteModalOpen(false), setLoading(false)));
+    }
+
+    function cancelDeleteModal(): void {
+      setDeleteModalOpen(false);
     }
 
     function cancelModal(): void {
@@ -184,6 +215,23 @@ const Post = memo(
                 cancelModal={cancelModal}
                 loading={loading}
                 editorValue={editorValue}
+              />
+            )}
+          </Suspense>
+
+          <Suspense
+            fallback={
+              <Spin
+                indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
+              />
+            }
+          >
+            {isDeleteModalOpen && (
+              <ConfirmDeleteModal
+                isOpened={isDeleteModalOpen}
+                handleConfirm={handleDeleteMessage}
+                handleCancel={cancelDeleteModal}
+                loading={loading}
               />
             )}
           </Suspense>

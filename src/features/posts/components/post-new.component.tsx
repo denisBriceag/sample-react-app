@@ -29,7 +29,6 @@ const PostNew = memo(() => {
   }
 
   const handleEditorChange = useCallback((value: string) => {
-    console.log(value);
     setEditorState((prev) => ({ ...prev, editorValue: value }));
   }, []);
 

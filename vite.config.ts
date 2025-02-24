@@ -5,7 +5,10 @@ import { createCA, createCert } from "mkcert";
 
 /*
  * We create self-signed certificate to be able to set http-only cookies which are served for keeping refresh token
+ *
+ * !!!DO NOT CHANGE THIS FILE!!!
  * */
+
 const ca = await createCA({
   organization: "Grid Dynamics",
   countryCode: "MD",
