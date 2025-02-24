@@ -2,7 +2,7 @@
   "validation": {
     "invalidEmail": "This email is not valid",
     "required": "This field is required",
-    "minLength": "Password should have minimum 6 symbols",
+    "minLength": "Password should have minimum 8 symbols",
     "passwordShouldMatch": "The password you entered do not match!"
   },
   "errors": {

@@ -8,6 +8,7 @@ import Validator from "../../../core/utils/validator.util.ts";
 import ButtonComponent from "../../../core/components/button.component.tsx";
 import clsx from "clsx";
 import { useTheme } from "../../../core/providers/theme/theme.context.ts";
+import { Roles } from "../../../core/types/roles.enum.ts";
 
 export default function SignUp(): ReactElement {
   const [disabled, setDisabled] = useState(true);
@@ -25,7 +26,7 @@ export default function SignUp(): ReactElement {
   function handleSubmit(): void {
     setLoading(true);
 
-    signUp(form.getFieldsValue())
+    signUp({ ...form.getFieldsValue(), role: Roles.ADMIN })
       .then(() => (setLoading(false), navigate("/dashboard")))
       .catch(() => requestFailure());
   }
@@ -110,7 +111,7 @@ export default function SignUp(): ReactElement {
               required
               rules={[
                 { required: true, message: t("validation.required") },
-                { min: 6, message: t("validation.minLength") },
+                { min: 8, message: t("validation.minLength") },
               ]}
             >
               <Input size="large" type="password" />
