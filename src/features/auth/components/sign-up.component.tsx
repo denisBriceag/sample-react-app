@@ -3,7 +3,7 @@ import img from "../../../assets/img.png";
 import { useAuth } from "../contexts/auth.context.ts";
 import { ReactElement, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Form, Input, notification } from "antd";
+import { Form, Input } from "antd";
 import Validator from "../../../core/utils/validator.util.ts";
 import ButtonComponent from "../../../core/components/button.component.tsx";
 import clsx from "clsx";
@@ -13,8 +13,6 @@ import { Roles } from "../../../core/types/roles.enum.ts";
 export default function SignUp(): ReactElement {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
-
-  const [api, contextHolder] = notification.useNotification();
 
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -28,7 +26,7 @@ export default function SignUp(): ReactElement {
 
     signUp({ ...form.getFieldsValue(), role: Roles.ADMIN })
       .then(() => (setLoading(false), navigate("/dashboard")))
-      .catch(() => requestFailure());
+      .catch(() => setLoading(false));
   }
 
   function handleFieldsChange(): void {
@@ -39,17 +37,8 @@ export default function SignUp(): ReactElement {
     );
   }
 
-  function requestFailure(): void {
-    setLoading(false);
-    api.error({
-      message: t("errors.network.message"),
-      description: t("errors.network.description"),
-    });
-  }
-
   return (
     <>
-      {contextHolder}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img

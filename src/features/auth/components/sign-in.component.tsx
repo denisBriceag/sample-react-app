@@ -3,18 +3,18 @@ import img from "../../../assets/img.png";
 import { useAuth } from "../contexts/auth.context.ts";
 import { ReactElement, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Form, Input, notification } from "antd";
+import { Form, Input } from "antd";
 import ButtonComponent from "../../../core/components/button.component.tsx";
 import Validator from "../../../core/utils/validator.util.ts";
 import { useTheme } from "../../../core/providers/theme/theme.context.ts";
 import clsx from "clsx";
+import { AppRoutes } from "../../../core/constants/routes.ts";
 
 export default function SignIn(): ReactElement {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const { darkMode } = useTheme();
-  const [api, contextHolder] = notification.useNotification();
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -24,8 +24,8 @@ export default function SignIn(): ReactElement {
     setLoading(true);
 
     signIn(form.getFieldsValue())
-      .then(() => (setLoading(false), navigate("/dashboard")))
-      .catch(() => requestFailure());
+      .then(() => (setLoading(false), navigate(AppRoutes.DASHBOARD)))
+      .catch(() => setLoading(false));
   }
 
   function handleFieldsChange(): void {
@@ -37,17 +37,8 @@ export default function SignIn(): ReactElement {
     );
   }
 
-  function requestFailure(): void {
-    setLoading(false);
-    api.error({
-      message: t("errors.network.message"),
-      description: t("errors.network.description"),
-    });
-  }
-
   return (
     <>
-      {contextHolder}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img

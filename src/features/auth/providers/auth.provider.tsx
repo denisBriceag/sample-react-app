@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { User } from "../../../core/types/uset.type.ts";
 import { axiosInstance } from "../../../core/axios/axios-instance.ts";
 import { SignUp } from "../types/sign-up.type.ts";
@@ -19,6 +19,7 @@ const initialState: User = {
 
 export const AuthProvider = ({ children }: WrapperProps) => {
   const [user, setUser] = useState<User>(initialState);
+  const whiteList = useMemo(() => ["/auth/sign-in", "/auth/sign-up"], []);
 
   useEffect(() => {
     axiosInstance
@@ -62,6 +63,8 @@ export const AuthProvider = ({ children }: WrapperProps) => {
       async (error) => {
         const originalRequest = error.config;
 
+        if (whiteList.includes(error.config.url)) return;
+
         if (error.status === 403) return;
 
         if (error.status === 401) {
@@ -89,11 +92,11 @@ export const AuthProvider = ({ children }: WrapperProps) => {
     );
 
     return () => axiosInstance.interceptors.response.eject(refreshInterceptor);
-  }, []);
+  }, [whiteList]);
 
   async function signIn(signInData: SignIn): Promise<void> {
     return axiosInstance
-      .post("/auth/sign-in", signInData)
+      .post<{ accessToken: string }>("/auth/sign-in", signInData)
       .then((res) => {
         const user = jose.decodeJwt(res.data.accessToken) as User;
 
@@ -102,12 +105,14 @@ export const AuthProvider = ({ children }: WrapperProps) => {
         StorageUtil.set("user", user);
         sessionStorage.setItem("accessToken", res.data.accessToken);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        throw new Error();
+      });
   }
 
   async function signUp(signUnData: SignUp): Promise<void> {
     return axiosInstance
-      .post("/auth/sign-up", signUnData)
+      .post<{ accessToken: string }>("/auth/sign-up", signUnData)
       .then((res) => {
         const user = jose.decodeJwt(res.data.accessToken) as User;
 
@@ -115,7 +120,9 @@ export const AuthProvider = ({ children }: WrapperProps) => {
         StorageUtil.set("user", user);
         sessionStorage.setItem("accessToken", res.data.accessToken);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        throw new Error();
+      });
   }
 
   async function signOut(): Promise<void | AxiosResponse<void>> {
@@ -127,7 +134,9 @@ export const AuthProvider = ({ children }: WrapperProps) => {
         StorageUtil.set("user", initialState);
         sessionStorage.setItem("accessToken", "");
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        throw new Error();
+      });
   }
 
   function refreshTokens(): Promise<AxiosResponse<{ accessToken: string }>> {
