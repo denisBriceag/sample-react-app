@@ -11,10 +11,10 @@ import { Roles } from "../../../core/types/roles.enum.ts";
 import { StorageUtil } from "../../../core/utils/storage.util.ts";
 
 const initialState: User = {
-  sub: StorageUtil.get<User>("user")!.sub,
-  name: StorageUtil.get<User>("user")!.name,
-  email: StorageUtil.get<User>("user")!.email,
-  role: StorageUtil.get<User>("user")!.role,
+  sub: StorageUtil.get<User>("user")?.sub || "",
+  name: StorageUtil.get<User>("user")?.name || "",
+  email: StorageUtil.get<User>("user")?.email || "",
+  role: StorageUtil.get<User>("user")?.role || Roles.USER,
 };
 
 export const AuthProvider = ({ children }: WrapperProps) => {
