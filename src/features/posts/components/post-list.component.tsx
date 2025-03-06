@@ -90,22 +90,7 @@ export default function PostList(): ReactElement {
 
       {!messageState.loading &&
         !!messageState.messages.length &&
-        messageState.messages.map((message, index, array) => {
-          if (index + 1 === array.length) {
-            return (
-              <Post
-                deleteHandler={deleteMessage}
-                key={message.id}
-                id={message.id}
-                message={message.message}
-                userId={message.userId}
-                postedOn={message.postedOn}
-                userName={message.userName}
-                likeCount={message.likeCount}
-                likedByUser={message.likedByUser}
-              />
-            );
-          }
+        messageState.messages.map((message) => {
           return (
             <Post
               deleteHandler={deleteMessage}
